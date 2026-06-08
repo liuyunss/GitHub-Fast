@@ -5,193 +5,227 @@
 
 # --- 核心服务 ---
 
-20.205.243.166                           github.com
+140.82.112.4                             github.com
+140.82.113.3                             github.com
+140.82.112.3                             github.com
 
-20.205.243.168                           api.github.com
+140.82.112.6                             api.github.com
+140.82.113.6                             api.github.com
+140.82.114.5                             api.github.com
 
-185.199.108.133                          raw.githubusercontent.com
-185.199.110.133                          raw.githubusercontent.com
 185.199.111.133                          raw.githubusercontent.com
+185.199.110.133                          raw.githubusercontent.com
+185.199.108.133                          raw.githubusercontent.com
 
-20.205.243.166                           gist.github.com
-46.82.174.68                             gist.github.com
-8.7.198.45                               gist.github.com
+140.82.114.3                             gist.github.com
+140.82.112.3                             gist.github.com
+140.82.116.4                             gist.github.com
 
-185.199.108.153                          github.io
-185.199.110.153                          github.io
 185.199.109.153                          github.io
+185.199.111.153                          github.io
+185.199.110.153                          github.io
 
 192.0.66.2                               github.blog
 
-140.82.113.17                            github.community
-140.82.112.18                            github.community
+140.82.112.17                            github.community
 140.82.114.17                            github.community
+140.82.112.18                            github.community
 
 185.199.108.153                          githubstatus.com
-185.199.110.153                          githubstatus.com
 185.199.111.153                          githubstatus.com
+185.199.110.153                          githubstatus.com
 
 # --- 认证与安全 ---
 
-140.82.114.26                            alive.github.com
-140.82.114.25                            alive.github.com
 140.82.113.26                            alive.github.com
+140.82.112.26                            alive.github.com
+140.82.114.25                            alive.github.com
 
-140.82.113.22                            central.github.com
-140.82.112.21                            central.github.com
 140.82.114.22                            central.github.com
+140.82.112.22                            central.github.com
+140.82.113.21                            central.github.com
 
 185.199.108.215                          github.githubassets.com
-185.199.110.215                          github.githubassets.com
 185.199.111.215                          github.githubassets.com
+185.199.109.215                          github.githubassets.com
 
 # --- 头像与用户内容 ---
 
-185.199.110.133                          avatars.githubusercontent.com
-185.199.111.133                          avatars.githubusercontent.com
 185.199.108.133                          avatars.githubusercontent.com
+185.199.110.133                          avatars.githubusercontent.com
+185.199.109.133                          avatars.githubusercontent.com
 
+185.199.109.133                          avatars0.githubusercontent.com
 185.199.110.133                          avatars0.githubusercontent.com
-185.199.111.133                          avatars0.githubusercontent.com
 185.199.108.133                          avatars0.githubusercontent.com
 
-185.199.111.133                          avatars1.githubusercontent.com
 185.199.109.133                          avatars1.githubusercontent.com
 185.199.110.133                          avatars1.githubusercontent.com
+185.199.108.133                          avatars1.githubusercontent.com
 
-185.199.109.133                          avatars2.githubusercontent.com
-185.199.110.133                          avatars2.githubusercontent.com
 185.199.111.133                          avatars2.githubusercontent.com
+185.199.110.133                          avatars2.githubusercontent.com
+185.199.108.133                          avatars2.githubusercontent.com
 
-185.199.109.133                          avatars3.githubusercontent.com
-185.199.111.133                          avatars3.githubusercontent.com
 185.199.108.133                          avatars3.githubusercontent.com
+185.199.110.133                          avatars3.githubusercontent.com
+185.199.109.133                          avatars3.githubusercontent.com
 
-185.199.110.133                          avatars4.githubusercontent.com
 185.199.111.133                          avatars4.githubusercontent.com
-185.199.109.133                          avatars4.githubusercontent.com
+185.199.110.133                          avatars4.githubusercontent.com
+185.199.108.133                          avatars4.githubusercontent.com
 
-185.199.109.133                          avatars5.githubusercontent.com
-185.199.111.133                          avatars5.githubusercontent.com
 185.199.108.133                          avatars5.githubusercontent.com
+185.199.110.133                          avatars5.githubusercontent.com
+185.199.109.133                          avatars5.githubusercontent.com
 
-185.199.108.133                          user-images.githubusercontent.com
 185.199.110.133                          user-images.githubusercontent.com
-185.199.111.133                          user-images.githubusercontent.com
+185.199.108.133                          user-images.githubusercontent.com
+185.199.109.133                          user-images.githubusercontent.com
 
 185.199.110.133                          private-user-images.githubusercontent.com
+185.199.108.133                          private-user-images.githubusercontent.com
 185.199.109.133                          private-user-images.githubusercontent.com
-185.199.111.133                          private-user-images.githubusercontent.com
 
-185.199.111.133                          favicons.githubusercontent.com
-185.199.109.133                          favicons.githubusercontent.com
+185.199.108.133                          favicons.githubusercontent.com
 185.199.110.133                          favicons.githubusercontent.com
+185.199.109.133                          favicons.githubusercontent.com
 
 # --- 代码与文件 ---
 
 185.199.108.133                          raw.github.com
 185.199.110.133                          raw.github.com
-185.199.111.133                          raw.github.com
+185.199.109.133                          raw.github.com
 
-20.205.243.165                           codeload.github.com
+140.82.112.10                            codeload.github.com
+140.82.114.10                            codeload.github.com
+140.82.113.10                            codeload.github.com
 
-185.199.109.133                          cloud.githubusercontent.com
 185.199.110.133                          cloud.githubusercontent.com
-185.199.111.133                          cloud.githubusercontent.com
+185.199.108.133                          cloud.githubusercontent.com
+185.199.109.133                          cloud.githubusercontent.com
 
 185.199.110.133                          desktop.githubusercontent.com
-185.199.111.133                          desktop.githubusercontent.com
+185.199.108.133                          desktop.githubusercontent.com
 185.199.109.133                          desktop.githubusercontent.com
 
+185.199.110.133                          media.githubusercontent.com
 185.199.108.133                          media.githubusercontent.com
 185.199.109.133                          media.githubusercontent.com
-185.199.110.133                          media.githubusercontent.com
 
 185.199.108.133                          objects.githubusercontent.com
 185.199.110.133                          objects.githubusercontent.com
-185.199.111.133                          objects.githubusercontent.com
+185.199.109.133                          objects.githubusercontent.com
 
-140.82.112.21                            objects-origin.githubusercontent.com
-140.82.114.22                            objects-origin.githubusercontent.com
-140.82.113.22                            objects-origin.githubusercontent.com
+140.82.114.21                            objects-origin.githubusercontent.com
+140.82.112.22                            objects-origin.githubusercontent.com
+140.82.113.21                            objects-origin.githubusercontent.com
 
-185.199.109.133                          camo.githubusercontent.com
 185.199.108.133                          camo.githubusercontent.com
 185.199.110.133                          camo.githubusercontent.com
+185.199.109.133                          camo.githubusercontent.com
 
 # --- CDN与加速 ---
 
 151.101.193.194                          github.global.ssl.fastly.net
-151.101.129.194                          github.global.ssl.fastly.net
 151.101.1.194                            github.global.ssl.fastly.net
+151.101.65.194                           github.global.ssl.fastly.net
 
-185.199.111.133                          github.map.fastly.net
 185.199.108.133                          github.map.fastly.net
+185.199.110.133                          github.map.fastly.net
 185.199.109.133                          github.map.fastly.net
 
 # --- Releases与下载 ---
 
-16.15.254.85                             github-cloud.s3.amazonaws.com
-16.182.102.249                           github-cloud.s3.amazonaws.com
-52.217.141.209                           github-cloud.s3.amazonaws.com
+16.15.212.170                            github-cloud.s3.amazonaws.com
+16.15.236.21                             github-cloud.s3.amazonaws.com
+54.231.133.1                             github-cloud.s3.amazonaws.com
 
-16.15.183.12                             github-com.s3.amazonaws.com
-16.15.223.194                            github-com.s3.amazonaws.com
-52.217.195.17                            github-com.s3.amazonaws.com
+16.15.229.136                            github-com.s3.amazonaws.com
+16.15.246.159                            github-com.s3.amazonaws.com
+54.231.224.129                           github-com.s3.amazonaws.com
 
-16.182.32.73                             github-production-release-asset-2e65be.s3.amazonaws.com
-16.15.213.120                            github-production-release-asset-2e65be.s3.amazonaws.com
-16.182.98.153                            github-production-release-asset-2e65be.s3.amazonaws.com
+16.15.236.58                             github-production-release-asset-2e65be.s3.amazonaws.com
+52.216.27.68                             github-production-release-asset-2e65be.s3.amazonaws.com
+52.217.197.129                           github-production-release-asset-2e65be.s3.amazonaws.com
 
-52.217.202.161                           github-production-repository-file-5c1aeb.s3.amazonaws.com
-16.15.237.65                             github-production-repository-file-5c1aeb.s3.amazonaws.com
-52.217.229.49                            github-production-repository-file-5c1aeb.s3.amazonaws.com
+16.15.253.235                            github-production-repository-file-5c1aeb.s3.amazonaws.com
+52.216.50.25                             github-production-repository-file-5c1aeb.s3.amazonaws.com
+16.15.223.239                            github-production-repository-file-5c1aeb.s3.amazonaws.com
 
-52.217.203.17                            github-production-user-asset-6210df.s3.amazonaws.com
-16.15.183.12                             github-production-user-asset-6210df.s3.amazonaws.com
-52.216.51.89                             github-production-user-asset-6210df.s3.amazonaws.com
+54.231.168.137                           github-production-user-asset-6210df.s3.amazonaws.com
+16.15.228.96                             github-production-user-asset-6210df.s3.amazonaws.com
+16.15.223.17                             github-production-user-asset-6210df.s3.amazonaws.com
 
+185.199.111.154                          github-releases.githubusercontent.com
 185.199.108.154                          github-releases.githubusercontent.com
 185.199.109.154                          github-releases.githubusercontent.com
-185.199.111.154                          github-releases.githubusercontent.com
 
 185.199.109.133                          release-assets.githubusercontent.com
+185.199.110.133                          release-assets.githubusercontent.com
 185.199.108.133                          release-assets.githubusercontent.com
-185.199.111.133                          release-assets.githubusercontent.com
 
 # --- Packages与包管理 ---
 
-20.205.243.164                           pkg.github.com
+140.82.114.33                            pkg.github.com
+140.82.112.34                            pkg.github.com
+140.82.114.34                            pkg.github.com
 
-20.205.243.164                           ghcr.io
+140.82.114.34                            ghcr.io
+140.82.112.34                            ghcr.io
+140.82.112.33                            ghcr.io
 
-20.205.243.164                           docker.pkg.github.com
+140.82.112.34                            docker.pkg.github.com
+140.82.113.33                            docker.pkg.github.com
+140.82.116.33                            docker.pkg.github.com
 
-20.205.243.164                           docker-proxy.pkg.github.com
+140.82.114.34                            docker-proxy.pkg.github.com
+140.82.113.34                            docker-proxy.pkg.github.com
+140.82.112.33                            docker-proxy.pkg.github.com
 
-20.205.243.164                           maven.pkg.github.com
+140.82.114.33                            maven.pkg.github.com
+140.82.114.34                            maven.pkg.github.com
+140.82.116.33                            maven.pkg.github.com
 
-20.205.243.164                           npm.pkg.github.com
+140.82.113.34                            npm.pkg.github.com
+140.82.114.33                            npm.pkg.github.com
+140.82.114.34                            npm.pkg.github.com
 
-20.205.243.164                           npm-proxy.pkg.github.com
+140.82.114.33                            npm-proxy.pkg.github.com
+140.82.112.33                            npm-proxy.pkg.github.com
+140.82.112.34                            npm-proxy.pkg.github.com
 
-20.205.243.164                           npm-beta-proxy.pkg.github.com
+140.82.112.34                            npm-beta-proxy.pkg.github.com
+140.82.114.34                            npm-beta-proxy.pkg.github.com
+140.82.116.33                            npm-beta-proxy.pkg.github.com
 
-20.205.243.164                           npm-beta.pkg.github.com
+140.82.113.33                            npm-beta.pkg.github.com
+140.82.114.34                            npm-beta.pkg.github.com
+140.82.114.33                            npm-beta.pkg.github.com
 
-20.205.243.164                           nuget.pkg.github.com
+140.82.113.34                            nuget.pkg.github.com
+140.82.114.33                            nuget.pkg.github.com
+140.82.116.33                            nuget.pkg.github.com
 
-20.205.243.164                           pypi.pkg.github.com
+140.82.113.34                            pypi.pkg.github.com
+140.82.112.34                            pypi.pkg.github.com
+140.82.116.33                            pypi.pkg.github.com
 
-20.205.243.164                           rubygems.pkg.github.com
+140.82.112.33                            rubygems.pkg.github.com
+140.82.112.34                            rubygems.pkg.github.com
+140.82.116.33                            rubygems.pkg.github.com
 
-20.205.243.164                           swift.pkg.github.com
+140.82.114.34                            swift.pkg.github.com
+140.82.114.33                            swift.pkg.github.com
+140.82.113.34                            swift.pkg.github.com
 
-20.205.243.164                           containers.pkg.github.com
+140.82.114.33                            containers.pkg.github.com
+140.82.112.34                            containers.pkg.github.com
+140.82.116.33                            containers.pkg.github.com
 
 185.199.108.154                          pkg-containers.githubusercontent.com
-185.199.109.154                          pkg-containers.githubusercontent.com
 185.199.111.154                          pkg-containers.githubusercontent.com
+185.199.109.154                          pkg-containers.githubusercontent.com
 
 # --- GitHub Actions ---
 
@@ -199,54 +233,56 @@
 
 13.107.42.16                             pipelines.actions.githubusercontent.com
 
-185.199.111.154                          pkg.actions.githubusercontent.com
 185.199.108.154                          pkg.actions.githubusercontent.com
 185.199.110.154                          pkg.actions.githubusercontent.com
+185.199.111.154                          pkg.actions.githubusercontent.com
 
 20.85.130.105                            broker.actions.githubusercontent.com
 
-4.249.131.160                            copilot-proxy.githubusercontent.com
-52.175.140.176                           copilot-proxy.githubusercontent.com
-20.250.119.64                            copilot-proxy.githubusercontent.com
+20.85.130.105                            copilot-proxy.githubusercontent.com
+138.91.182.224                           copilot-proxy.githubusercontent.com
+4.225.11.192                             copilot-proxy.githubusercontent.com
 
-150.171.110.135                          copilot-reports.github.com
-150.171.110.70                           copilot-reports.github.com
-150.171.110.65                           copilot-reports.github.com
+150.171.110.194                          copilot-reports.github.com
+150.171.110.195                          copilot-reports.github.com
+150.171.109.77                           copilot-reports.github.com
 
-140.82.112.22                            dependabot-actions.githubapp.com
-140.82.114.21                            dependabot-actions.githubapp.com
+140.82.114.22                            dependabot-actions.githubapp.com
 140.82.113.22                            dependabot-actions.githubapp.com
+140.82.112.22                            dependabot-actions.githubapp.com
 
 40.88.240.168                            runnerghubeus1.actions.githubusercontent.com
 
 140.82.113.21                            runner-auth.actions.githubusercontent.com
-140.82.114.22                            runner-auth.actions.githubusercontent.com
+140.82.114.21                            runner-auth.actions.githubusercontent.com
 140.82.113.22                            runner-auth.actions.githubusercontent.com
 
-150.171.110.133                          setup-tools.actions.githubusercontent.com
-150.171.110.65                           setup-tools.actions.githubusercontent.com
-150.171.110.104                          setup-tools.actions.githubusercontent.com
+150.171.109.150                          setup-tools.actions.githubusercontent.com
+150.171.109.71                           setup-tools.actions.githubusercontent.com
+150.171.110.147                          setup-tools.actions.githubusercontent.com
 
 # --- GitHub Copilot ---
 
-140.82.112.21                            api.individual.githubcopilot.com
+140.82.114.21                            api.individual.githubcopilot.com
 140.82.114.22                            api.individual.githubcopilot.com
 140.82.112.22                            api.individual.githubcopilot.com
 
 140.82.114.21                            api.mcp.github.com
+140.82.112.22                            api.mcp.github.com
 140.82.114.22                            api.mcp.github.com
-140.82.112.21                            api.mcp.github.com
 
 # --- GitHub Pages ---
 
+52.224.38.193                            github.dev
+20.99.227.183                            github.dev
 20.43.185.14                             github.dev
 
-150.171.110.70                           vscode.dev
-150.171.110.68                           vscode.dev
-150.171.110.137                          vscode.dev
+150.171.109.148                          vscode.dev
+150.171.109.147                          vscode.dev
+150.171.109.74                           vscode.dev
 
 # ============================================================
-# 🔄 更新时间: 2026-06-08 23:36:08 CST
-# 🔧 项目地址: https://github.com/liuyunss/GitHub-fast
+# 🔄 更新时间: 2026-06-09 00:25:14 CST
+# 🔧 项目地址: https://github.com/liuyunss/GitHub-Fast
 # ⭐ 如果对你有帮助，点个 Star 支持一下！
 # ============================================================

@@ -25,12 +25,12 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 2. 添加远程规则：
    - 方案名：`GitHubFast`
    - 类型：`远程`
-   - URL：`https://raw.githubusercontent.com/liuyunss/GitHub-fast/main/hosts`
+   - URL：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
    - 自动更新：`1 小时`
 
 ### 方式二：复制粘贴
 
-打开 [hosts](https://raw.githubusercontent.com/liuyunss/GitHub-fast/main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
+打开 [hosts](https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
 
 | 系统 | hosts 文件路径 |
 |------|---------------|
@@ -54,13 +54,13 @@ sudo systemd-resolve --flush-caches
 ### 方式三：命令行一键更新
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-fast/main/scripts/apply.sh | bash
+curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | bash
 ```
 
 ### 方式四：手动执行
 
 ```bash
-git clone https://github.com/liuyunss/GitHub-fast.git
+git clone https://github.com/liuyunss/GitHub-Fast.git
 cd GitHubFast
 pip install -r requirements.txt
 python -m src.main
