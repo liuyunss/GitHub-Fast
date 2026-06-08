@@ -1,0 +1,234 @@
+# ============================================================
+# GitHubFast 域名配置
+# enabled: false 可关闭整个组或单个域名
+# 每个域名最多保留 3 个 IP（出现最多1个 + 延迟最低2个）
+# ============================================================
+
+# ============================================================
+# IP 来源配置
+# ============================================================
+sources:
+  # --- DNS-over-HTTPS（最可靠，加密查询，基本不会被污染）---
+  doh:
+    - name: "Cloudflare"
+      url: "https://cloudflare-dns.com/dns-query"
+      enabled: true
+    - name: "Google"
+      url: "https://dns.google/resolve"
+      enabled: true
+    - name: "Quad9"
+      url: "https://dns.quad9.net/dns-query"
+      strategy: wire_curl  # Quad9 强制 HTTP/2，aiohttp 不支持，用 curl 子进程
+      enabled: true
+    # OpenDNS 请求格式有问题，HTTP 400，禁用
+    - name: "OpenDNS"
+      url: "https://doh.opendns.com/dns-query"
+      enabled: false
+    # AliDNS 是国内服务，海外服务器（GitHub Actions）连不上，禁用
+    - name: "AliDNS"
+      url: "https://dns.alidns.com/resolve"
+      enabled: false
+
+  # --- DNS 直查（UDP 查询）---
+  dns:
+    # 国内 DNS（最稳定）
+    - name: "114DNS"
+      server: "114.114.114.114"
+      enabled: true
+    - name: "AliDNS"
+      server: "223.5.5.5"
+      enabled: true
+    - name: "DNSPod"
+      server: "119.29.29.29"
+      enabled: true
+    # 海外 UDP DNS 被 GFW 封锁，禁用
+    # - name: "Cloudflare"
+    #   server: "1.1.1.1"
+    #   enabled: false
+    # - name: "Google"
+    #   server: "8.8.8.8"
+    #   enabled: false
+    # - name: "Quad101-A"
+    #   server: "101.101.101.101"
+    #   enabled: false
+    # - name: "Quad101-B"
+    #   server: "101.102.103.104"
+    #   enabled: false
+
+  # --- 网页抓取（补充来源）---
+  web:
+    # Cloudflare WAF 可能封锁数据中心 IP，在 GHA 上测试后再决定
+    # 本地被封是正常的，GHA 的 Azure IP 通常不被封
+    - name: "ipaddress.com"
+      enabled: true
+    # 免费版限 45 次/分钟，需配合限速使用
+    - name: "ip-api.com"
+      enabled: true
+      rate_limit: 20  # 每分钟最多请求数（留 5 次余量）
+
+# ============================================================
+# 并发控制
+# ============================================================
+concurrency:
+  doh: 15
+  dns: 10
+  web: 3
+
+# ============================================================
+# 域名分组配置
+# 按重要性从高到低排列
+# ============================================================
+groups:
+  # === 核心服务（必须，关闭后 GitHub 主站无法访问）===
+  - name: "核心服务"
+    enabled: true
+    domains:
+      - domain: "github.com"
+      - domain: "api.github.com"
+      - domain: "raw.githubusercontent.com"
+      - domain: "gist.github.com"
+      - domain: "github.io"
+      - domain: "github.blog"
+      - domain: "github.community"
+      - domain: "githubstatus.com"
+
+  # === 认证与安全 ===
+  - name: "认证与安全"
+    enabled: true
+    domains:
+      - domain: "github.com"
+        note: "登录/OAuth"
+      - domain: "alive.github.com"
+      - domain: "central.github.com"
+      - domain: "github.githubassets.com"
+
+  # === 头像与用户内容 ===
+  - name: "头像与用户内容"
+    enabled: true
+    domains:
+      - domain: "avatars.githubusercontent.com"
+      - domain: "avatars0.githubusercontent.com"
+      - domain: "avatars1.githubusercontent.com"
+      - domain: "avatars2.githubusercontent.com"
+      - domain: "avatars3.githubusercontent.com"
+      - domain: "avatars4.githubusercontent.com"
+      - domain: "avatars5.githubusercontent.com"
+      - domain: "user-images.githubusercontent.com"
+      - domain: "private-user-images.githubusercontent.com"
+      - domain: "favicons.githubusercontent.com"
+
+  # === 代码与文件 ===
+  - name: "代码与文件"
+    enabled: true
+    domains:
+      - domain: "raw.githubusercontent.com"
+        note: "原始文件"
+      - domain: "raw.github.com"
+      - domain: "codeload.github.com"
+      - domain: "cloud.githubusercontent.com"
+      - domain: "desktop.githubusercontent.com"
+      - domain: "media.githubusercontent.com"
+      - domain: "objects.githubusercontent.com"
+      - domain: "objects-origin.githubusercontent.com"
+      - domain: "camo.githubusercontent.com"
+
+  # === CDN与加速 ===
+  - name: "CDN与加速"
+    enabled: true
+    domains:
+      - domain: "github.global.ssl.fastly.net"
+      - domain: "github.map.fastly.net"
+      - domain: "github.githubassets.com"
+
+  # === Releases 与下载 ===
+  - name: "Releases与下载"
+    enabled: true
+    domains:
+      - domain: "github-cloud.s3.amazonaws.com"
+      - domain: "github-com.s3.amazonaws.com"
+      - domain: "github-production-release-asset-2e65be.s3.amazonaws.com"
+      - domain: "github-production-repository-file-5c1aeb.s3.amazonaws.com"
+      - domain: "github-production-user-asset-6210df.s3.amazonaws.com"
+      - domain: "github-releases.githubusercontent.com"
+      - domain: "release-assets.githubusercontent.com"
+
+  # === Packages（包管理）===
+  - name: "Packages与包管理"
+    enabled: true
+    domains:
+      - domain: "pkg.github.com"
+      - domain: "ghcr.io"
+      - domain: "docker.pkg.github.com"
+      - domain: "docker-proxy.pkg.github.com"
+      - domain: "maven.pkg.github.com"
+      - domain: "npm.pkg.github.com"
+      - domain: "npm-proxy.pkg.github.com"
+      - domain: "npm-beta-proxy.pkg.github.com"
+      - domain: "npm-beta.pkg.github.com"
+      - domain: "nuget.pkg.github.com"
+      - domain: "pypi.pkg.github.com"
+      - domain: "rubygems.pkg.github.com"
+      - domain: "swift.pkg.github.com"
+      - domain: "containers.pkg.github.com"
+      - domain: "pkg-containers.githubusercontent.com"
+
+  # === GitHub Actions ===
+  - name: "GitHub Actions"
+    enabled: true
+    domains:
+      - domain: "actions.githubusercontent.com"
+      - domain: "pipelines.actions.githubusercontent.com"
+      - domain: "pkg.actions.githubusercontent.com"
+      - domain: "broker.actions.githubusercontent.com"
+      - domain: "copilot-proxy.githubusercontent.com"
+      - domain: "copilot-reports.github.com"
+      - domain: "dependabot-actions.githubapp.com"
+      - domain: "runnerghubeus1.actions.githubusercontent.com"
+      - domain: "runner-auth.actions.githubusercontent.com"
+      - domain: "setup-tools.actions.githubusercontent.com"
+
+  # === Copilot ===
+  - name: "GitHub Copilot"
+    enabled: true
+    domains:
+      - domain: "api.individual.githubcopilot.com"
+      - domain: "api.mcp.github.com"
+      - domain: "copilot-proxy.githubusercontent.com"
+      - domain: "copilot-reports.github.com"
+
+  # === Pages ===
+  - name: "GitHub Pages"
+    enabled: true
+    domains:
+      - domain: "github.io"
+      - domain: "github.dev"
+      - domain: "vscode.dev"
+
+  # === 其他服务 ===
+  - name: "其他服务"
+    enabled: false
+    domains:
+      - domain: "collector.github.com"
+      - domain: "live.github.com"
+      - domain: "lfs.github.com"
+      - domain: "uploads.github.com"
+      - domain: "scanning-api.github.com"
+      - domain: "default.exp-tas.com"
+      - domain: "visualstudio.com"
+      - domain: "education.github.com"
+      - domain: "gcr.io"
+      - domain: "fulcio.githubapp.com"
+      - domain: "timestamp.githubapp.com"
+      - domain: "tuf-repo.github.com"
+      - domain: "githubcopilot.com"
+      - domain: "launch.actions.githubusercontent.com"
+      - domain: "mpsghub.actions.githubusercontent.com"
+      - domain: "origin-tracker.githubusercontent.com"
+      - domain: "release-assets.githubusercontent.com"
+      - domain: "results-receiver.actions.githubusercontent.com"
+      - domain: "run-actions-1-azure-eastus.actions.githubusercontent.com"
+      - domain: "tokenghub.actions.githubusercontent.com"
+      - domain: "vstoken.actions.githubusercontent.com"
+      - domain: "github-registry-files.githubusercontent.com"
+      - domain: "npmregistryv2prod.blob.core.windows.net"
+      - domain: "productionresultssa1.blob.core.windows.net"
