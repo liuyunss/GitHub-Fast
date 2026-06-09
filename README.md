@@ -1,4 +1,4 @@
-     1|# GitHubFast
+1|# GitHubFast
      2|
      3|<p align="center">
      4|  <a href="https://github.com/liuyunss/GitHub-Fast/stargazers"><img src="https://img.shields.io/github/stars/liuyunss/GitHub-Fast?style=flat&logo=github&label=Stars" alt="Stars"></a>
@@ -32,31 +32,31 @@
     32|**一次性替换 hosts：**
     33|
     34|```bash
-    35|curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | sudo bash
+    35|curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash
     36|```
     37|
     38|**启用定时任务（默认每小时自动更新）：**
     39|
     40|```bash
-    41|curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | sudo bash -s -- --install
+    41|curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --install
     42|```
     43|
     44|**自定义更新间隔（如每 30 分钟）：**
     45|
     46|```bash
-    47|curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | sudo bash -s -- --install --cron "*/30 * * * *"
+    47|curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --install --cron "*/30 * * * *"
     48|```
     49|
     50|**卸载定时任务：**
     51|
     52|```bash
-    53|curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | sudo bash -s -- --uninstall
+    53|curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --uninstall
     54|```
     55|
     56|**删除 hosts 中的 GitHubFast 内容：**
     57|
     58|```bash
-    59|curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | sudo bash -s -- --clean
+    59|curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --clean
     60|```
     61|
     62|> 默认只替换，不开启定时。`--install` 启用后，crontab 会开机自启，无需额外配置。
@@ -77,7 +77,7 @@
     77|
     78|### 方式三：复制粘贴
     79|
-    80|打开 [hosts](https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
+    80|打开 [hosts](https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
     81|
     82|| 系统 | hosts 文件路径 |
     83||------|---------------|
