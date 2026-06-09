@@ -1,12 +1,11 @@
 # GitHubFast
 
 <p align="center">
-  <a href="https://github.com/liuyunss/GitHub-Fast/stargazers"><img src="https://img.shields.io/github/stars/liuyunss/GitHub-Fast?style=flat&logo=github" alt="Stars"></a>
-  <a href="https://github.com/liuyunss/GitHub-Fast/network/members"><img src="https://img.shields.io/github/forks/liuyunss/GitHub-Fast?style=flat&logo=github" alt="Forks"></a>
-  <a href="https://github.com/liuyunss/GitHub-Fast/issues"><img src="https://img.shields.io/github/issues/liuyunss/GitHub-Fast?style=flat" alt="Issues"></a>
-  <a href="https://github.com/liuyunss/GitHub-Fast/commits/main"><img src="https://img.shields.io/github/last-commit/liuyunss/GitHub-Fast?style=flat" alt="Last Commit"></a>
-  <a href="https://github.com/liuyunss/GitHub-Fast/blob/main/LICENSE"><img src="https://img.shields.io/github/license/liuyunss/GitHub-Fast?style=flat" alt="License"></a>
+  <a href="https://github.com/liuyunss/GitHub-Fast/stargazers"><img src="https://img.shields.io/github/stars/liuyunss/GitHub-Fast?style=flat&logo=github&label=Stars" alt="Stars"></a>
+  <a href="https://github.com/liuyunss/GitHub-Fast/commits/main"><img src="https://img.shields.io/github/last-commit/liuyunss/GitHub-Fast?style=flat&label=Last%20Commit" alt="Last Commit"></a>
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=liuyunss.GitHub-Fast&style=flat&label=Visitors" alt="Visitors">
   <img src="https://img.shields.io/badge/自动更新-每8小时-blue?style=flat" alt="Update">
+  <a href="https://github.com/liuyunss/GitHub-Fast/blob/main/LICENSE"><img src="https://img.shields.io/github/license/liuyunss/GitHub-Fast?style=flat" alt="License"></a>
 </p>
 
 > 🔧 GitHub 访问加速 — 多源 DNS + DoH + 网页抓取，智能选择最佳 IP
