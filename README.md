@@ -19,7 +19,25 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 
 ## 快速使用
 
-### 方式一：SwitchHosts 自动更新（推荐）
+### 方式一：curl 一键替换（推荐）
+
+```bash
+# 一次性替换 hosts
+curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash
+
+# 启用定时任务（默认每小时自动更新）
+curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --install
+
+# 自定义更新间隔（如每 30 分钟）
+curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --install --cron "*/30 * * * *"
+
+# 卸载定时任务
+curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --uninstall
+```
+
+> 默认只替换，不开启定时。`--install` 启用后，crontab 会开机自启，无需额外配置。
+
+### 方式二：SwitchHosts 自动更新
 
 1. 下载 [SwitchHosts](https://github.com/oldj/SwitchHosts)
 2. **方式 A：从 URL 导入（推荐）**
@@ -36,7 +54,7 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
    - GitHub 直连：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
    - 自动更新：`12 小时`
 
-### 方式二：复制粘贴
+### 方式三：复制粘贴
 
 打开 [hosts](https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
 
@@ -57,12 +75,6 @@ sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder
 
 # Linux
 sudo systemd-resolve --flush-caches
-```
-
-### 方式三：命令行一键更新
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | bash
 ```
 
 ### 方式四：手动执行
