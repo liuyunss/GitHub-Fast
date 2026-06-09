@@ -31,8 +31,18 @@ while [[ $# -gt 0 ]]; do
         --uninstall)  ACTION="uninstall"; shift ;;
         --clean)      ACTION="clean";    shift ;;
         --cron)       CRON_EXPR="$2";    shift 2 ;;
-        --help|-h)    sed -n '2,/^# ===/{ /^#/s/^# \?//p }' "$0"; exit 0 ;;
-        *)            shift ;;
+        --help|-h)
+            echo "用法: curl -fsSL <url> | sudo bash -s -- [选项]"
+            echo ""
+            echo "选项:"
+            echo "  (无参数)          一次性替换 hosts"
+            echo "  --install         启用定时任务（默认每小时）"
+            echo "  --install --cron  自定义 cron 表达式"
+            echo "  --uninstall       卸载定时任务"
+            echo "  --clean           删除 hosts 中的 GitHubFast 内容"
+            exit 0
+            ;;
+        *) shift ;;
     esac
 done
 
@@ -64,13 +74,10 @@ http_get() {
     fi
 }
 
-# macOS BSD sed 与 GNU sed 的 -i 参数不同
-sed_i() {
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        sed -i '' "$@"
-    else
-        sed -i "$@"
-    fi
+# 删除文件中 Start/End 标记之间的内容（perl 跨平台，不依赖 sed）
+remove_section() {
+    local file="$1" start="$2" end="$3"
+    perl -i -ne "print unless /$start/../$end/" "$file"
 }
 
 flush_dns() {
@@ -101,7 +108,7 @@ do_apply() {
     echo "📦 已备份: $backup"
 
     # 删除旧的 GitHubFast 部分（幂等：没有就跳过）
-    sed_i '/# GitHubFast Start/,/# GitHubFast End/d' "$SYSTEM_HOSTS"
+    remove_section "$SYSTEM_HOSTS" "GitHubFast Start" "GitHubFast End"
 
     # 追加新内容
     echo "" >> "$SYSTEM_HOSTS"
@@ -163,8 +170,8 @@ do_clean() {
     echo "=== 清除系统 hosts 中的 GitHubFast 内容 ==="
     if grep -q "# GitHubFast Start" "$SYSTEM_HOSTS"; then
         cp "$SYSTEM_HOSTS" "$SYSTEM_HOSTS.bak.$(date +%Y%m%d%H%M%S)"
-        sed_i '/# GitHubFast Start/,/# GitHubFast End/d' "$SYSTEM_HOSTS"
-        # 删除多余空行（兼容 macOS）
+        remove_section "$SYSTEM_HOSTS" "GitHubFast Start" "GitHubFast End"
+        # 删除多余空行
         awk 'NF{p=1}p' "$SYSTEM_HOSTS" > "$SYSTEM_HOSTS.tmp" && mv "$SYSTEM_HOSTS.tmp" "$SYSTEM_HOSTS"
         flush_dns
         echo "✅ GitHubFast 内容已清除，DNS 缓存已刷新"
