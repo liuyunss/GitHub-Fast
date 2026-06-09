@@ -64,6 +64,15 @@ http_get() {
     fi
 }
 
+# macOS BSD sed 与 GNU sed 的 -i 参数不同
+sed_i() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i '' "$@"
+    else
+        sed -i "$@"
+    fi
+}
+
 flush_dns() {
     if command -v dscacheutil &>/dev/null; then
         dscacheutil -flushcache 2>/dev/null
@@ -92,7 +101,7 @@ do_apply() {
     echo "📦 已备份: $backup"
 
     # 删除旧的 GitHubFast 部分（幂等：没有就跳过）
-    sed -i '/# GitHubFast Start/,/# GitHubFast End/d' "$SYSTEM_HOSTS"
+    sed_i '/# GitHubFast Start/,/# GitHubFast End/d' "$SYSTEM_HOSTS"
 
     # 追加新内容
     echo "" >> "$SYSTEM_HOSTS"
@@ -154,8 +163,9 @@ do_clean() {
     echo "=== 清除系统 hosts 中的 GitHubFast 内容 ==="
     if grep -q "# GitHubFast Start" "$SYSTEM_HOSTS"; then
         cp "$SYSTEM_HOSTS" "$SYSTEM_HOSTS.bak.$(date +%Y%m%d%H%M%S)"
-        sed -i '/# GitHubFast Start/,/# GitHubFast End/d' "$SYSTEM_HOSTS"
-        sed -i '/^$/N;/^\n$/d' "$SYSTEM_HOSTS"
+        sed_i '/# GitHubFast Start/,/# GitHubFast End/d' "$SYSTEM_HOSTS"
+        # 删除多余空行（兼容 macOS）
+        awk 'NF{p=1}p' "$SYSTEM_HOSTS" > "$SYSTEM_HOSTS.tmp" && mv "$SYSTEM_HOSTS.tmp" "$SYSTEM_HOSTS"
         flush_dns
         echo "✅ GitHubFast 内容已清除，DNS 缓存已刷新"
     else
