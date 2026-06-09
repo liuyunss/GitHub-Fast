@@ -65,7 +65,7 @@ def _ping_one(ip: str, count: int = PING_TIMES, timeout: int = PING_TIMEOUT) -> 
 
 async def _ping_one_async(ip: str, count: int = PING_TIMES, timeout: int = PING_TIMEOUT) -> tuple[str, float]:
     """异步封装：在线程池中执行 ping，返回 (ip, latency_ms)。"""
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_running_loop()
     latency = await loop.run_in_executor(None, _ping_one, ip, count, timeout)
     return ip, latency
 

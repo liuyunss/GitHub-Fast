@@ -6,13 +6,13 @@
 
 ## 为什么需要这个？
 
-DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通过 **多个 DNS 来源** 并发查询真实 IP，用 **出现次数 + 延迟测试** 智能选择最佳 IP，自动生成 hosts 文件。
+DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通过 **多个 DNS 来源** 并发查询真实 IP，用 **出现次数** 智能选择最佳 IP，自动生成 hosts 文件。
 
 ## 特性
 
 - **多来源查询**：DoH + DNS 直查 + 网页抓取，覆盖国内外
-- **智能选 IP**：出现次数最多的 + 延迟最低的，每个域名保留 3 个
-- **自动更新**：GitHub Actions 每天自动运行
+- **智能选 IP**：出现次数最多的 Top 3，每个域名保留 3 个
+- **自动更新**：GitHub Actions 每天 3 次自动运行
 - **配置灵活**：按分组管理域名，可单独开关
 - **错误容错**：任何来源失败不影响整体
 - **来源统计**：每次运行输出各源成功率，方便排查
@@ -25,8 +25,9 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 2. 添加远程规则：
    - 方案名：`GitHubFast`
    - 类型：`远程`
-   - URL：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
-   - 自动更新：`1 小时`
+   - 地址1（加速源）：`https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts`
+   - 地址2（GitHub 直连）：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
+   - 自动更新：`12 小时`
 
 ### 方式二：复制粘贴
 
@@ -61,7 +62,7 @@ curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/a
 
 ```bash
 git clone https://github.com/liuyunss/GitHub-Fast.git
-cd GitHubFast
+cd GitHub-Fast
 pip install -r requirements.txt
 python -m src.main
 ```
@@ -78,10 +79,7 @@ python -m src.main
     合并去重 + 统计出现次数
          │
          ▼
-    Ping/TCP 测试 Top N 候选 IP
-         │
-         ▼
-    选择：出现最多 + 延迟最低 = 每域名 3 个 IP
+    选择出现次数最多的 Top 3 = 每域名 3 个 IP
          │
          ▼
     写入 hosts 文件
@@ -94,6 +92,7 @@ python -m src.main
 - 关闭/开启单个域名
 - 添加/删除 DNS 来源
 - 调整并发数量
+- 配置 ping 测试开关
 - 配置速率限制
 
 ## 域名分组

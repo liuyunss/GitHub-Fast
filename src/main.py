@@ -16,6 +16,8 @@ from .resolve import resolve_all_domains
 from .sort import select_ips
 from .generate import generate_hosts, generate_readme
 
+PROJECT_ROOT = Path(__file__).parent.parent
+
 # ============================================================
 # 日志配置
 # ============================================================
@@ -36,8 +38,12 @@ def load_config(config_path: str = "config.yaml") -> dict:
     if not path.exists():
         logger.error(f"配置文件不存在: {config_path}")
         sys.exit(1)
-    with open(path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return yaml.safe_load(f)
+    except yaml.YAMLError as e:
+        logger.error(f"配置文件格式错误: {e}")
+        sys.exit(1)
 
 
 def extract_domains(config: dict) -> list[str]:
@@ -48,7 +54,12 @@ def extract_domains(config: dict) -> list[str]:
         if not group.get("enabled", True):
             continue
         for item in group.get("domains", []):
-            domain = item["domain"]
+            if not item.get("enabled", True):
+                continue
+            domain = item.get("domain")
+            if not domain:
+                logger.warning(f"跳过无效域名条目: {item}")
+                continue
             if domain not in seen:
                 seen.add(domain)
                 domains.append(domain)
@@ -65,10 +76,9 @@ def _log_source_stats(results: dict):
     if total_domains == 0:
         return
 
-    # 按来源统计：成功域名数、总 IP 数
-    source_domains: Counter[str] = Counter()   # 来源 → 成功域名数
-    source_ips: Counter[str] = Counter()       # 来源 → 总 IP 数
-    source_type_map: dict[str, str] = {}       # 来源 → 类型(doh/dns/web)
+    source_domains: Counter[str] = Counter()
+    source_ips: Counter[str] = Counter()
+    source_type_map: dict[str, str] = {}
 
     for domain_result in results.values():
         seen_sources: set[str] = set()
@@ -93,8 +103,9 @@ def _log_source_stats(results: dict):
         ip_count = source_ips[source]
         logger.info(f"{source:<16} {stype:<6} {count:>6}/{total_domains} {ip_count:>8} {rate:>7.1f}%")
 
+    total_ip_count = sum(source_ips.values())
     logger.info("-" * 60)
-    logger.info(f"{'总计':<16} {'':6} {total_domains:>6}/{total_domains}")
+    logger.info(f"{'总计':<16} {'':6} {total_domains:>6}/{total_domains} {total_ip_count:>8}")
     logger.info("=" * 60)
     logger.info("")
 
@@ -117,8 +128,9 @@ async def run(config_path: str = "config.yaml", repo: str = "liuyunss/GitHub-fas
     ping_enabled = config.get("ping_enabled", False)
 
     domains = extract_domains(config)
+    ping_status = "开启" if ping_enabled else "关闭"
     logger.info(f"共 {len(domains)} 个域名需要解析")
-    logger.info(f"Ping 测试: {"开启" if ping_enabled else "关闭"}")
+    logger.info(f"Ping 测试: {ping_status}")
 
     # 2. 并发解析所有域名
     logger.info("开始并发解析...")
@@ -128,13 +140,13 @@ async def run(config_path: str = "config.yaml", repo: str = "liuyunss/GitHub-fas
     # 2.1 来源统计
     _log_source_stats(results)
 
-    # 3. 对每个域名选 IP
+    # 3. 对每个域名选 IP（并发）
+    valid_domains = [d for d in domains if d in results]
+    tasks = [select_ips(results[d], ping_enabled=ping_enabled) for d in valid_domains]
+    ip_results = await asyncio.gather(*tasks)
+
     domain_ips = {}
-    for domain in domains:
-        if domain not in results:
-            logger.warning(f"[{domain}] 无解析结果，跳过")
-            continue
-        ips = await select_ips(results[domain], ping_enabled=ping_enabled)
+    for domain, ips in zip(valid_domains, ip_results):
         if ips:
             domain_ips[domain] = ips
         else:
@@ -143,7 +155,7 @@ async def run(config_path: str = "config.yaml", repo: str = "liuyunss/GitHub-fas
     logger.info(f"共 {len(domain_ips)} 个域名成功获取 IP")
 
     # 4. 生成 hosts 文件
-    output_path = Path(__file__).parent.parent / "hosts"
+    output_path = PROJECT_ROOT / "hosts"
     hosts_content = generate_hosts(
         domain_ips=domain_ips,
         groups=groups,
@@ -153,8 +165,8 @@ async def run(config_path: str = "config.yaml", repo: str = "liuyunss/GitHub-fas
     logger.info(f"hosts 文件已生成: {output_path}")
 
     # 5. 生成 README
-    readme_path = Path(__file__).parent.parent / "README.md"
-    readme_content = generate_readme(hosts_content, repo=repo)
+    readme_path = PROJECT_ROOT / "README.md"
+    readme_content = generate_readme(repo=repo)
     readme_path.write_text(readme_content, encoding="utf-8")
     logger.info(f"README 已生成: {readme_path}")
 

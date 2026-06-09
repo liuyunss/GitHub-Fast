@@ -28,13 +28,11 @@ def generate_hosts(
     repo: str = "liuyunss/GitHub-fast",
     output_path: str = "hosts",
 ) -> str:
-    """
-    生成 hosts 文件内容并写入文件
-    """
+    """生成 hosts 文件内容并写入文件"""
     tz = timezone(timedelta(hours=8))
     update_time = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S CST")
 
-    lines = [HOSTS_HEADER.format(repo=repo, update_time=update_time)]
+    lines = [HOSTS_HEADER]
 
     seen_domains: set[str] = set()
 
@@ -43,10 +41,14 @@ def generate_hosts(
             continue
 
         group_name = group["name"]
-        group_lines: list[str] = [f"# --- {group_name} ---\n"]
+        group_lines: list[str] = [f"# --- {group_name} ---"]
 
         for item in group.get("domains", []):
-            domain = item["domain"]
+            if not item.get("enabled", True):
+                continue
+            domain = item.get("domain")
+            if not domain:
+                continue
             note = item.get("note", "")
             ips = domain_ips.get(domain, [])
 
@@ -55,7 +57,7 @@ def generate_hosts(
             seen_domains.add(domain)
 
             if not ips:
-                group_lines.append(f"# {domain}  # 未获取到 IP\n")
+                group_lines.append(f"# {domain}  # 未获取到 IP")
                 continue
 
             for i, ip in enumerate(ips):
@@ -68,6 +70,7 @@ def generate_hosts(
 
         if len(group_lines) > 1:
             lines.extend(group_lines)
+            lines.append("")  # 分组间空行
 
     lines.append(HOSTS_FOOTER.format(update_time=update_time, repo=repo))
 
@@ -80,7 +83,6 @@ def generate_hosts(
 
 
 def generate_readme(
-    hosts_content: str,
     repo: str = "liuyunss/GitHub-fast",
 ) -> str:
     """生成 README.md 内容"""
@@ -92,13 +94,13 @@ def generate_readme(
 
 ## 为什么需要这个？
 
-DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通过 **多个 DNS 来源** 并发查询真实 IP，用 **出现次数 + 延迟测试** 智能选择最佳 IP，自动生成 hosts 文件。
+DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通过 **多个 DNS 来源** 并发查询真实 IP，用 **出现次数** 智能选择最佳 IP，自动生成 hosts 文件。
 
 ## 特性
 
 - **多来源查询**：DoH + DNS 直查 + 网页抓取，覆盖国内外
-- **智能选 IP**：出现次数最多的 + 延迟最低的，每个域名保留 3 个
-- **自动更新**：GitHub Actions 每天自动运行
+- **智能选 IP**：出现次数最多的 Top 3，每个域名保留 3 个
+- **自动更新**：GitHub Actions 每天 3 次自动运行
 - **配置灵活**：按分组管理域名，可单独开关
 - **错误容错**：任何来源失败不影响整体
 - **来源统计**：每次运行输出各源成功率，方便排查
@@ -111,12 +113,13 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 2. 添加远程规则：
    - 方案名：`GitHubFast`
    - 类型：`远程`
-   - URL：`https://raw.githubusercontent.com/{repo}/main/hosts`
-   - 自动更新：`1 小时`
+   - 地址1（加速源）：`https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts`
+   - 地址2（GitHub 直连）：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
+   - 自动更新：`12 小时`
 
 ### 方式二：复制粘贴
 
-打开 [hosts](https://raw.githubusercontent.com/{repo}/main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
+打开 [hosts](https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
 
 | 系统 | hosts 文件路径 |
 |------|---------------|
@@ -140,14 +143,14 @@ sudo systemd-resolve --flush-caches
 ### 方式三：命令行一键更新
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/{repo}/main/scripts/apply.sh | bash
+curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | bash
 ```
 
 ### 方式四：手动执行
 
 ```bash
-git clone https://github.com/{repo}.git
-cd GitHubFast
+git clone https://github.com/liuyunss/GitHub-Fast.git
+cd GitHub-Fast
 pip install -r requirements.txt
 python -m src.main
 ```
@@ -164,10 +167,7 @@ python -m src.main
     合并去重 + 统计出现次数
          │
          ▼
-    Ping/TCP 测试 Top N 候选 IP
-         │
-         ▼
-    选择：出现最多 + 延迟最低 = 每域名 3 个 IP
+    选择出现次数最多的 Top 3 = 每域名 3 个 IP
          │
          ▼
     写入 hosts 文件
@@ -180,6 +180,7 @@ python -m src.main
 - 关闭/开启单个域名
 - 添加/删除 DNS 来源
 - 调整并发数量
+- 配置 ping 测试开关
 - 配置速率限制
 
 ## 域名分组
