@@ -22,11 +22,18 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 ### 方式一：SwitchHosts 自动更新（推荐）
 
 1. 下载 [SwitchHosts](https://github.com/oldj/SwitchHosts)
-2. 添加远程规则：
+2. **方式 A：从 URL 导入（推荐）**
+   - 点击左下角 `+` → `从 URL 导入`
+   - 填入加速源地址：`https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts`
+   - 自动更新：`12 小时`
+3. **方式 B：从文件导入**
+   - 下载 [switchhosts.json](config/switchhosts.json)
+   - 点击左下角 `+` → `从文件导入` → 选择下载的 json 文件
+4. **方式 C：手动添加远程规则**
    - 方案名：`GitHubFast`
    - 类型：`远程`
-   - 地址1（加速源）：`https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts`
-   - 地址2（GitHub 直连）：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
+   - 加速源：`https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts`
+   - GitHub 直连：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
    - 自动更新：`12 小时`
 
 ### 方式二：复制粘贴

@@ -1,0 +1,17 @@
+{
+  "data": {
+    "list": {
+      "tree": [
+        {
+          "type": "remote",
+          "title": "GitHubFast",
+          "url": "https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts",
+          "refresh_interval": 3600,
+          "id": "e6f72c3b-9200-4d8c-9484-3e442bd75cc33",
+          "on": true
+        }
+      ]
+    }
+  },
+  "version": []
+}
