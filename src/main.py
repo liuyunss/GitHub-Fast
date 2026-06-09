@@ -114,9 +114,11 @@ async def run(config_path: str = "config.yaml", repo: str = "liuyunss/GitHub-fas
     sources = config.get("sources", {})
     concurrency = config.get("concurrency", {})
     groups = config.get("groups", [])
+    ping_enabled = config.get("ping_enabled", False)
 
     domains = extract_domains(config)
     logger.info(f"共 {len(domains)} 个域名需要解析")
+    logger.info(f"Ping 测试: {"开启" if ping_enabled else "关闭"}")
 
     # 2. 并发解析所有域名
     logger.info("开始并发解析...")
@@ -132,7 +134,7 @@ async def run(config_path: str = "config.yaml", repo: str = "liuyunss/GitHub-fas
         if domain not in results:
             logger.warning(f"[{domain}] 无解析结果，跳过")
             continue
-        ips = select_ips(results[domain])
+        ips = await select_ips(results[domain], ping_enabled=ping_enabled)
         if ips:
             domain_ips[domain] = ips
         else:
