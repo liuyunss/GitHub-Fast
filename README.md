@@ -58,10 +58,10 @@ curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/appl
 **从 URL 导入：**
 
 ```
-https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts
+https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/config/switchhosts.json
 ```
 
-SwitchHosts 左下角 `+` → `从 URL 导入` → 粘贴上面地址 → 自动更新设为 `12 小时`。
+SwitchHosts 左下角 `+` → `从 URL 导入` → 粘贴上面地址。
 
 **从文件导入：**
 
