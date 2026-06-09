@@ -1,16 +1,8 @@
-<p align="center">
-  <h1>GitHubFast</h1>
-  <p>GitHub 访问加速 — 多源 DNS + DoH + 网页抓取，智能选择最佳 IP</p>
-</p>
+# GitHubFast
 
-<p align="center">
-  <a href="https://github.com/liuyunss/GitHub-Fast/stargazers"><img src="https://img.shields.io/github/stars/liuyunss/GitHub-Fast?style=flat&logo=github&label=Stars" alt="Stars"></a>
-  <img src="https://visitor-badge.laobi.icu/badge?page_id=liuyunss.GitHub-Fast&style=flat&label=Visitors" alt="Visitors">
-  <img src="https://img.shields.io/badge/自动更新-每8小时-blue?style=flat" alt="Update">
-  <a href="https://github.com/liuyunss/GitHub-Fast/blob/main/LICENSE"><img src="https://img.shields.io/github/license/liuyunss/GitHub-Fast?style=flat" alt="License"></a>
-</p>
-
-<p align="center">⭐ 如果对你有帮助，请点个 Star 支持一下！</p>
+> 🔧 GitHub 访问加速 — 多源 DNS + DoH + 网页抓取，智能选择最佳 IP
+>
+> ⭐ 如果对你有帮助，请点个 Star 支持一下！
 
 ## 为什么需要这个？
 
@@ -27,57 +19,19 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 
 ## 快速使用
 
-### 方式一：curl 一键替换（推荐）
+### 方式一：SwitchHosts 自动更新（推荐）
 
-**一次性替换 hosts：**
+1. 下载 [SwitchHosts](https://github.com/oldj/SwitchHosts)
+2. 添加远程规则：
+   - 方案名：`GitHubFast`
+   - 类型：`远程`
+   - 地址1（加速源）：`https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts`
+   - 地址2（GitHub 直连）：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
+   - 自动更新：`12 小时`
 
-```bash
-curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash
-```
+### 方式二：复制粘贴
 
-**启用定时任务（默认每小时自动更新）：**
-
-```bash
-curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --install
-```
-
-**自定义更新间隔（如每 30 分钟）：**
-
-```bash
-curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --install --cron "*/30 * * * *"
-```
-
-**卸载定时任务：**
-
-```bash
-curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --uninstall
-```
-
-**删除 hosts 中的 GitHubFast 内容：**
-
-```bash
-curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --clean
-```
-
-> 默认只替换，不开启定时。`--install` 启用后，crontab 会开机自启，无需额外配置。
-
-### 方式二：SwitchHosts 自动更新
-
-**从 URL 导入：**
-
-```
-https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/config/switchhosts.json
-```
-
-SwitchHosts 左下角 `+` → `从 URL 导入` → 粘贴上面地址。
-
-**从文件导入：**
-
-下载 [switchhosts.json](config/switchhosts.json)，SwitchHosts 左下角 `+` → `从文件导入` → 选择下载的文件。
-
-### 方式三：复制粘贴
-
-打开 [hosts](https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
+打开 [hosts](https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
 
 | 系统 | hosts 文件路径 |
 |------|---------------|
@@ -96,6 +50,12 @@ sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder
 
 # Linux
 sudo systemd-resolve --flush-caches
+```
+
+### 方式三：命令行一键更新
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | bash
 ```
 
 ### 方式四：手动执行

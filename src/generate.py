@@ -66,12 +66,10 @@ def generate_hosts(
                 else:
                     group_lines.append(f"{ip:<40} {domain}")
 
-            group_lines.append("")  # 空行分隔
-
         if len(group_lines) > 1:
             lines.extend(group_lines)
-            lines.append("")  # 分组间空行
 
+    lines.append("")  # 内容结束空行
     lines.append(HOSTS_FOOTER.format(update_time=update_time, repo=repo))
 
     content = "\n".join(lines)

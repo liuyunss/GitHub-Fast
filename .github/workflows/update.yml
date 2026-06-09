@@ -2,10 +2,8 @@ name: GitHubFast Update
 
 on:
   schedule:
-    # 每天 UTC 07:00 / 15:00 / 23:00 = 北京时间 15:00 / 23:00 / 07:00
-    - cron: '0 7 * * *'
-    - cron: '0 15 * * *'
-    - cron: '0 23 * * *'
+    # 每 2 小时更新一次
+    - cron: '0 */2 * * *'
   workflow_dispatch:
 
 permissions:
