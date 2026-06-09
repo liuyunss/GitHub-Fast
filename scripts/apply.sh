@@ -7,6 +7,7 @@
 #   curl -fsSL <url> | sudo bash -s -- --install        # 启用定时任务（默认每小时）
 #   curl -fsSL <url> | sudo bash -s -- --install --cron "*/30 * * * *"  # 自定义间隔
 #   curl -fsSL <url> | sudo bash -s -- --uninstall      # 卸载定时任务
+#   curl -fsSL <url> | sudo bash -s -- --clean           # 删除 hosts 中的 GitHubFast 内容
 # ============================================================
 
 set -e
@@ -22,19 +23,16 @@ DEFAULT_CRON="0 * * * *"
 LOG_FILE="/var/log/githubfast.log"
 
 # === 参数解析 ===
-ACTION="apply"
-CRON_EXPR=""
+ACTION="apply"  CRON_EXPR=""
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --install)    ACTION="install"; shift ;;
+        --install)    ACTION="install";  shift ;;
         --uninstall)  ACTION="uninstall"; shift ;;
-        --cron)       CRON_EXPR="$2"; shift 2 ;;
-        --help|-h)
-            sed -n '2,/^# ===/{ /^#/s/^# \?//p }' "$0"
-            exit 0
-            ;;
-        *) shift ;;
+        --clean)      ACTION="clean";    shift ;;
+        --cron)       CRON_EXPR="$2";    shift 2 ;;
+        --help|-h)    sed -n '2,/^# ===/{ /^#/s/^# \?//p }' "$0"; exit 0 ;;
+        *)            shift ;;
     esac
 done
 
@@ -152,9 +150,23 @@ do_uninstall() {
     echo "💡 原有的 hosts 内容仍保留在系统中，不会被删除"
 }
 
+do_clean() {
+    echo "=== 清除系统 hosts 中的 GitHubFast 内容 ==="
+    if grep -q "# GitHubFast Start" "$SYSTEM_HOSTS"; then
+        cp "$SYSTEM_HOSTS" "$SYSTEM_HOSTS.bak.$(date +%Y%m%d%H%M%S)"
+        sed -i '/# GitHubFast Start/,/# GitHubFast End/d' "$SYSTEM_HOSTS"
+        sed -i '/^$/N;/^\n$/d' "$SYSTEM_HOSTS"
+        flush_dns
+        echo "✅ GitHubFast 内容已清除，DNS 缓存已刷新"
+    else
+        echo "ℹ️  系统 hosts 中没有 GitHubFast 内容，无需清理"
+    fi
+}
+
 # === 执行 ===
 case "$ACTION" in
     apply)     do_apply ;;
     install)   do_install ;;
     uninstall) do_uninstall ;;
+    clean)     do_clean ;;
 esac

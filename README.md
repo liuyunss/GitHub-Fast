@@ -33,6 +33,9 @@ curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/appl
 
 # 卸载定时任务
 curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --uninstall
+
+# 删除 hosts 中的 GitHubFast 内容（不影响其他配置）
+curl -fsSL https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/scripts/apply.sh | sudo bash -s -- --clean
 ```
 
 > 默认只替换，不开启定时。`--install` 启用后，crontab 会开机自启，无需额外配置。
