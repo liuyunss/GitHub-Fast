@@ -19,16 +19,7 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 
 ## 快速使用
 
-### 方式一：SwitchHosts 一键导入（推荐）
-
-1. 下载 [SwitchHosts](https://github.com/oldj/SwitchHosts)
-2. 点击 **导入** → 选择 **JSON** → 粘贴以下地址：
-   ```
-   https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/config/switchhosts.json
-   ```
-3. 导入后自动启用，无需手动配置
-
-### 方式二：SwitchHosts 手动添加
+### 方式一：SwitchHosts 自动更新（推荐）
 
 1. 下载 [SwitchHosts](https://github.com/oldj/SwitchHosts)
 2. 添加远程规则：
@@ -37,7 +28,7 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
    - 地址1（推荐）：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
    - 自动更新：`12 小时`
 
-### 方式三：复制粘贴
+### 方式二：复制粘贴
 
 打开 [hosts](https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
 
@@ -60,13 +51,13 @@ sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder
 sudo systemd-resolve --flush-caches
 ```
 
-### 方式四：命令行一键更新
+### 方式三：命令行一键更新
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | bash
 ```
 
-### 方式五：手动执行
+### 方式四：手动执行
 
 ```bash
 git clone https://github.com/liuyunss/GitHub-Fast.git
