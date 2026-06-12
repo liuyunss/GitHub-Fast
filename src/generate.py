@@ -25,7 +25,7 @@ HOSTS_FOOTER = """\
 def generate_hosts(
     domain_ips: dict[str, list[str]],
     groups: list[dict],
-    repo: str = "liuyunss/GitHub-fast",
+    repo: str = "liuyunss/GitHub-Fast",
     output_path: str = "hosts",
 ) -> str:
     """生成 hosts 文件内容并写入文件"""
@@ -35,6 +35,9 @@ def generate_hosts(
     lines = [HOSTS_HEADER]
 
     seen_domains: set[str] = set()
+    # Track notes per domain — if a later occurrence has a note
+    # and the earlier one didn't, merge it in (defensive fix).
+    domain_notes: dict[str, str] = {}
 
     for group in groups:
         if not group.get("enabled", True):
@@ -53,16 +56,20 @@ def generate_hosts(
             ips = domain_ips.get(domain, [])
 
             if domain in seen_domains:
+                # Merge note if new one is non-empty and old one is empty
+                if note and not domain_notes.get(domain):
+                    domain_notes[domain] = note
                 continue
             seen_domains.add(domain)
+            domain_notes[domain] = note
 
             if not ips:
                 group_lines.append(f"# {domain}  # 未获取到 IP")
                 continue
 
             for i, ip in enumerate(ips):
-                if i == 0 and note:
-                    group_lines.append(f"{ip:<40} {domain}  # {note}")
+                if i == 0 and domain_notes.get(domain):
+                    group_lines.append(f"{ip:<40} {domain}  # {domain_notes[domain]}")
                 else:
                     group_lines.append(f"{ip:<40} {domain}")
 
@@ -81,7 +88,7 @@ def generate_hosts(
 
 
 def generate_readme(
-    repo: str = "liuyunss/GitHub-fast",
+    repo: str = "liuyunss/GitHub-Fast",
 ) -> str:
     """生成 README.md 内容"""
     return f"""# GitHubFast
@@ -98,7 +105,7 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 
 - **多来源查询**：DoH + DNS 直查 + 网页抓取，覆盖国内外
 - **智能选 IP**：出现次数最多的 Top 3，每个域名保留 3 个
-- **自动更新**：GitHub Actions 每天 3 次自动运行
+- **自动更新**：GitHub Actions 每 2 小时自动运行
 - **配置灵活**：按分组管理域名，可单独开关
 - **错误容错**：任何来源失败不影响整体
 - **来源统计**：每次运行输出各源成功率，方便排查
@@ -111,13 +118,12 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 2. 添加远程规则：
    - 方案名：`GitHubFast`
    - 类型：`远程`
-   - 地址1（加速源）：`https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts`
-   - 地址2（GitHub 直连）：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
+   - 地址1（推荐）：`https://raw.githubusercontent.com/{repo}/main/hosts`
    - 自动更新：`12 小时`
 
 ### 方式二：复制粘贴
 
-打开 [hosts](https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
+打开 [hosts](https://raw.githubusercontent.com/{repo}/main/hosts) 文件，复制内容，粘贴到系统 hosts 文件：
 
 | 系统 | hosts 文件路径 |
 |------|---------------|
@@ -141,13 +147,13 @@ sudo systemd-resolve --flush-caches
 ### 方式三：命令行一键更新
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh | bash
+curl -fsSL https://raw.githubusercontent.com/{repo}/main/scripts/apply.sh | bash
 ```
 
 ### 方式四：手动执行
 
 ```bash
-git clone https://github.com/liuyunss/GitHub-Fast.git
+git clone https://github.com/{repo}.git
 cd GitHub-Fast
 pip install -r requirements.txt
 python -m src.main

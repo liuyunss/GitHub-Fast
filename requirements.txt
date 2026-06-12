@@ -1,3 +1,4 @@
 aiohttp>=3.9
 aiodns>=3.2
+beautifulsoup4>=4.12
 pyyaml>=6.0

@@ -12,7 +12,7 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 
 - **多来源查询**：DoH + DNS 直查 + 网页抓取，覆盖国内外
 - **智能选 IP**：出现次数最多的 Top 3，每个域名保留 3 个
-- **自动更新**：GitHub Actions 每天 3 次自动运行
+- **自动更新**：GitHub Actions 每 2 小时自动运行
 - **配置灵活**：按分组管理域名，可单独开关
 - **错误容错**：任何来源失败不影响整体
 - **来源统计**：每次运行输出各源成功率，方便排查
@@ -25,8 +25,7 @@ DNS 污染导致 GitHub 域名解析到错误 IP，无法访问。本项目通�
 2. 添加远程规则：
    - 方案名：`GitHubFast`
    - 类型：`远程`
-   - 地址1（加速源）：`https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts`
-   - 地址2（GitHub 直连）：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
+   - 地址1（推荐）：`https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts`
    - 自动更新：`12 小时`
 
 ### 方式二：复制粘贴

@@ -87,10 +87,11 @@ groups:
     enabled: true
     domains:
       - domain: "github.com"
+        note: "登录/OAuth"
       - domain: "api.github.com"
       - domain: "raw.githubusercontent.com"
+        note: "原始文件"
       - domain: "gist.github.com"
-      - domain: "github.io"
       - domain: "github.blog"
       - domain: "github.community"
       - domain: "githubstatus.com"
@@ -99,11 +100,8 @@ groups:
   - name: "认证与安全"
     enabled: true
     domains:
-      - domain: "github.com"
-        note: "登录/OAuth"
       - domain: "alive.github.com"
       - domain: "central.github.com"
-      - domain: "github.githubassets.com"
 
   # === 头像与用户内容 ===
   - name: "头像与用户内容"
@@ -124,8 +122,6 @@ groups:
   - name: "代码与文件"
     enabled: true
     domains:
-      - domain: "raw.githubusercontent.com"
-        note: "原始文件"
       - domain: "raw.github.com"
       - domain: "codeload.github.com"
       - domain: "cloud.githubusercontent.com"
@@ -183,8 +179,6 @@ groups:
       - domain: "pipelines.actions.githubusercontent.com"
       - domain: "pkg.actions.githubusercontent.com"
       - domain: "broker.actions.githubusercontent.com"
-      - domain: "copilot-proxy.githubusercontent.com"
-      - domain: "copilot-reports.github.com"
       - domain: "dependabot-actions.githubapp.com"
       - domain: "runnerghubeus1.actions.githubusercontent.com"
       - domain: "runner-auth.actions.githubusercontent.com"

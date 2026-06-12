@@ -114,7 +114,7 @@ def _log_source_stats(results: dict):
 # 主流程
 # ============================================================
 
-async def run(config_path: str = "config.yaml", repo: str = "liuyunss/GitHub-fast"):
+async def run(config_path: str = "config.yaml", repo: str = "liuyunss/GitHub-Fast"):
     start_time = time.monotonic()
     logger.info("=" * 50)
     logger.info("GitHub-fast 开始更新")
@@ -191,7 +191,7 @@ def main():
         help="配置文件路径 (默认: config.yaml)",
     )
     parser.add_argument(
-        "--repo", default="liuyunss/GitHub-fast",
+        "--repo", default="liuyunss/GitHub-Fast",
         help="GitHub 仓库地址",
     )
     args = parser.parse_args()

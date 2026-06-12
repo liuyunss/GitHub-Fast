@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 
 import aiohttp
 import aiodns
+from bs4 import BeautifulSoup
 
 logger = logging.getLogger(__name__)
 
@@ -299,7 +300,17 @@ async def _fetch_ipaddress(session: aiohttp.ClientSession, domain: str) -> list[
                     logger.warning(f"[Web] ipaddress.com 查询 {domain} 失败: HTTP {resp.status}")
                     return []
                 html = await resp.text()
-                return re.findall(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b", html)
+                # 用 BeautifulSoup 解析 HTML，只提取结果表格中的 IP
+                soup = BeautifulSoup(html, "html.parser")
+                for tag in soup(["script", "style", "noscript"]):
+                    tag.decompose()
+                ip_pat = re.compile(r"^\s*((?:[0-9]{1,3}\.){3}[0-9]{1,3})\s*$")
+                ips = []
+                for td in soup.find_all("td"):
+                    m = ip_pat.match(td.get_text())
+                    if m:
+                        ips.append(m.group(1))
+                return ips
         except (aiohttp.ClientError, asyncio.TimeoutError):
             if attempt < 2:
                 await asyncio.sleep(1)

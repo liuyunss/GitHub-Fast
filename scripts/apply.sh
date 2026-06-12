@@ -13,7 +13,7 @@
 set -e
 
 # === 配置 ===
-CDN_HOSTS_URL="https://fastly.jsdelivr.net/gh/liuyunss/GitHub-Fast@main/hosts"
+CDN_HOSTS_URL="https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/hosts"
 RAW_SCRIPT_URL="https://raw.githubusercontent.com/liuyunss/GitHub-Fast/main/scripts/apply.sh"
 INSTALL_DIR="/usr/local/bin"
 INSTALL_NAME="githubfast"
